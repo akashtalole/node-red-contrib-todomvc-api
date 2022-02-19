@@ -1,0 +1,26 @@
+{
+    "TodomvcApi": {
+        "label": {
+            "service": "サービス",
+            "method": "メソッド",
+            "host": "ホスト",
+            "header": "ヘッダ",
+            "value": "値",
+            "isQuery": "クエリ"
+        },
+        "status": {
+            "requesting": "要求中"
+        },
+        "parameters": {
+            "list_todos": "GET /todos/",
+            "xFields": "X-Fields",
+            "create_todo": "POST /todos/",
+            "payload": "payload",
+            "put_todo": "PUT /todos/{id}",
+            "id": "id",
+            "get_todo": "GET /todos/{id}",
+            "delete_todo": "DELETE /todos/{id}",
+            "optionalParameters": "任意項目"
+        }
+    }
+}

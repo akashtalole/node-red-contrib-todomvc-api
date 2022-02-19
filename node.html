@@ -1,0 +1,387 @@
+<script type="text/javascript">
+    RED.nodes.registerType('todomvc-api', {
+        category: 'function',
+        color: '#89bf04',
+        defaults: {
+            service: { value: "", type: "todomvc-api-service", required: true },
+            method: { value: "", required: true },
+            list_todos_xFields: { value: "" },
+            list_todos_xFieldsType: { value: "str" },
+            create_todo_payload: { value: "" },
+            create_todo_payloadType: { value: "str" },
+            create_todo_xFields: { value: "" },
+            create_todo_xFieldsType: { value: "str" },
+            put_todo_payload: { value: "" },
+            put_todo_payloadType: { value: "str" },
+            put_todo_xFields: { value: "" },
+            put_todo_xFieldsType: { value: "str" },
+            put_todo_id: { value: "" },
+            put_todo_idType: { value: "str" },
+            get_todo_xFields: { value: "" },
+            get_todo_xFieldsType: { value: "str" },
+            get_todo_id: { value: "" },
+            get_todo_idType: { value: "str" },
+            delete_todo_id: { value: "" },
+            delete_todo_idType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.png',
+        label: function () {
+            return this.name || this.method || "todomvc-api";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-list_todos_xFields").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-list_todos_xFieldsType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#list_todos_xFields").hide();
+
+                $("#node-input-create_todo_payload").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-create_todo_payloadType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#create_todo_payload").hide();
+
+                $("#node-input-create_todo_xFields").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-create_todo_xFieldsType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#create_todo_xFields").hide();
+
+                $("#node-input-put_todo_payload").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-put_todo_payloadType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#put_todo_payload").hide();
+
+                $("#node-input-put_todo_xFields").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-put_todo_xFieldsType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#put_todo_xFields").hide();
+
+                $("#node-input-put_todo_id").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-put_todo_idType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#put_todo_id").hide();
+
+                $("#node-input-get_todo_xFields").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-get_todo_xFieldsType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#get_todo_xFields").hide();
+
+                $("#node-input-get_todo_id").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-get_todo_idType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#get_todo_id").hide();
+
+                $("#node-input-delete_todo_id").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-delete_todo_idType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#delete_todo_id").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'list_todos') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'create_todo') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'put_todo') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'get_todo') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+                    
+                }
+                if ($("#node-input-method").val() === 'delete_todo') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'list_todos') {
+
+                        $("#list_todos_xFields").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'create_todo') {
+
+                        $("#create_todo_payload").show();
+                        
+                        $("#create_todo_xFields").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'put_todo') {
+
+                        $("#put_todo_payload").show();
+                        
+                        $("#put_todo_xFields").show();
+                        
+                        $("#put_todo_id").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'get_todo') {
+
+                        $("#get_todo_xFields").show();
+                        
+                        $("#get_todo_id").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'delete_todo') {
+
+                        $("#delete_todo_id").show();
+                        
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'list_todos') {
+
+                    }
+                    if ($("#node-input-method").val() === 'create_todo') {
+
+                        $("#create_todo_payload").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'put_todo') {
+
+                        $("#put_todo_payload").show();
+                        
+                        $("#put_todo_id").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'get_todo') {
+
+                        $("#get_todo_id").show();
+                        
+                    }
+                    if ($("#node-input-method").val() === 'delete_todo') {
+
+                        $("#delete_todo_id").show();
+                        
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="todomvc-api">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="TodomvcApi.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="TodomvcApi.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="list_todos" data-i18n="TodomvcApi.parameters.list_todos"></option>
+            <option value="create_todo" data-i18n="TodomvcApi.parameters.create_todo"></option>
+            <option value="put_todo" data-i18n="TodomvcApi.parameters.put_todo"></option>
+            <option value="get_todo" data-i18n="TodomvcApi.parameters.get_todo"></option>
+            <option value="delete_todo" data-i18n="TodomvcApi.parameters.delete_todo"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="TodomvcApi.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="list_todos_xFields">
+        <label for="node-input-list_todos_xFields"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.xFields"></span></label>
+
+        <input type="text" id="node-input-list_todos_xFields" placeholder="An optional fields mask" style="width:70%">
+        <input type="hidden" id="node-input-list_todos_xFieldsType">
+    </div>
+
+    <div class="form-row" id="create_todo_payload">
+        <label for="node-input-create_todo_payload"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.payload"></span></label>
+
+        <input type="text" id="node-input-create_todo_payload" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-create_todo_payloadType">
+    </div>
+
+    <div class="form-row" id="create_todo_xFields">
+        <label for="node-input-create_todo_xFields"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.xFields"></span></label>
+
+        <input type="text" id="node-input-create_todo_xFields" placeholder="An optional fields mask" style="width:70%">
+        <input type="hidden" id="node-input-create_todo_xFieldsType">
+    </div>
+
+    <div class="form-row" id="put_todo_payload">
+        <label for="node-input-put_todo_payload"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.payload"></span></label>
+
+        <input type="text" id="node-input-put_todo_payload" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-put_todo_payloadType">
+    </div>
+
+    <div class="form-row" id="put_todo_xFields">
+        <label for="node-input-put_todo_xFields"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.xFields"></span></label>
+
+        <input type="text" id="node-input-put_todo_xFields" placeholder="An optional fields mask" style="width:70%">
+        <input type="hidden" id="node-input-put_todo_xFieldsType">
+    </div>
+
+    <div class="form-row" id="put_todo_id">
+        <label for="node-input-put_todo_id"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.id"></span></label>
+
+        <input type="text" id="node-input-put_todo_id" placeholder="The task identifier" style="width:70%">
+        <input type="hidden" id="node-input-put_todo_idType">
+    </div>
+
+    <div class="form-row" id="get_todo_xFields">
+        <label for="node-input-get_todo_xFields"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.xFields"></span></label>
+
+        <input type="text" id="node-input-get_todo_xFields" placeholder="An optional fields mask" style="width:70%">
+        <input type="hidden" id="node-input-get_todo_xFieldsType">
+    </div>
+
+    <div class="form-row" id="get_todo_id">
+        <label for="node-input-get_todo_id"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.id"></span></label>
+
+        <input type="text" id="node-input-get_todo_id" placeholder="The task identifier" style="width:70%">
+        <input type="hidden" id="node-input-get_todo_idType">
+    </div>
+
+    <div class="form-row" id="delete_todo_id">
+        <label for="node-input-delete_todo_id"><i class="fa fa-list"></i> <span data-i18n="TodomvcApi.parameters.id"></span></label>
+
+        <input type="text" id="node-input-delete_todo_id" placeholder="The task identifier" style="width:70%">
+        <input type="hidden" id="node-input-delete_todo_idType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="todomvc-api">
+
+    <p>A simple TodoMVC API</p>
+    <p><b>Methods</b></p>
+        <h3>GET /todos/</h3>
+        <p>List all tasks</p>
+        <dl class="message-properties">
+        <dt>X-Fields <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /todos/</h3>
+        <p>Create a new task</p>
+        <dl class="message-properties">
+        <dt>payload <span class="property-type"></span></dt>
+        <dt>X-Fields <span class="property-type">string</span></dt>
+        </dl>
+        <h3>PUT /todos/{id}</h3>
+        <p>Update a task given its identifier</p>
+        <dl class="message-properties">
+        <dt>payload <span class="property-type"></span></dt>
+        <dt>X-Fields <span class="property-type">string</span></dt>
+        <dt>id <span class="property-type">integer</span></dt>
+        </dl>
+        <h3>GET /todos/{id}</h3>
+        <p>Fetch a given resource</p>
+        <dl class="message-properties">
+        <dt>X-Fields <span class="property-type">string</span></dt>
+        <dt>id <span class="property-type">integer</span></dt>
+        </dl>
+        <h3>DELETE /todos/{id}</h3>
+        <p>Delete a task given its identifier</p>
+        <dl class="message-properties">
+        <dt>id <span class="property-type">integer</span></dt>
+        </dl>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('todomvc-api-service', {
+        category: 'config',
+        defaults: {
+            host: { value: "", required: true },
+
+
+            name: { value: "" },
+        },
+        credentials: {
+            temp: { type: "text" }
+        },
+        label: function () {
+            return this.name || this.host;
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function () {
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="todomvc-api-service">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="TodomvcApi.label.host"></span></label>
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:1880">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="todomvc-api-service">
+    <p><b>Host</b>: URL to connect</p>
+
+</script>

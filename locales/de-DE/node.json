@@ -1,0 +1,26 @@
+{
+    "TodomvcApi": {
+        "label": {
+            "service": "Service",
+            "method": "Methode",
+            "host": "Host",
+            "header": "Header",
+            "value": "Wert",
+            "isQuery": "Suchanfrage"
+        },
+        "status": {
+            "requesting": "Anfrage..."
+        },
+        "parameters": {
+            "list_todos": "GET /todos/",
+            "xFields": "X-Fields",
+            "create_todo": "POST /todos/",
+            "payload": "payload",
+            "put_todo": "PUT /todos/{id}",
+            "id": "id",
+            "get_todo": "GET /todos/{id}",
+            "delete_todo": "DELETE /todos/{id}",
+            "optionalParameters": "Optionen"
+        }
+    }
+}

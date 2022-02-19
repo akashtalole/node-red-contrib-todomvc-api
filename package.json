@@ -1,0 +1,40 @@
+{
+  "name": "node-red-contrib-todomvc-api",
+  "version": "1.0.0",
+  "description": "Node-RED node for todomvc-api",
+  "main": "node.js",
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --timeout 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akashtalole/node-red-contrib-todomvc-api.git"
+  },
+  "node-red": {
+    "nodes": {
+      "todomvc-api": "node.js"
+    }
+  },
+  "keywords": [
+    "node-red",
+    "api",
+    "flask",
+    "todo"
+  ],
+  "dependencies": {
+    "q": "1.5.1",
+    "request": "2.88.2",
+    "file-type": "12.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0",
+    "node-red": "^1.0.4",
+    "node-red-node-test-helper": "^0.2.3"
+  },
+  "author": "Akash Talole",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/akashtalole/node-red-contrib-todomvc-api/issues"
+  },
+  "homepage": "https://github.com/akashtalole/node-red-contrib-todomvc-api#readme"
+}
